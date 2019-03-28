@@ -1,0 +1,19 @@
+spring:
+  application.name: dialog
+
+# N.B. this is the default:
+#spring.cloud.config.uri: http://localhost:8888
+
+#server.port: 8082
+
+eureka:
+  client:
+    serviceUrl:
+      #      defaultZone: ${SERVICE_REGISTRY}
+      #      defaultZone: ${EUREKA_URL:http://user:password@localhost:5000}/eureka/
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    preferIpAddress: false
+    ip-address: 192.168.1.10
+    secure-port-enabled: false

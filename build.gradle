@@ -1,0 +1,57 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.shunya'
+version = '0.1'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+bootJar {
+	archiveBaseName = "dialog"
+	version = version
+	launchScript()
+	mainClassName = "com.example.dialogflow.DialogflowApp"
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url 'https://github.com/broadbear/maven-repo/raw/master' }
+}
+
+ext {
+	springCloudVersion = 'Greenwich.SR1'
+}
+
+bootRun {
+	systemProperties = System.properties
+}
+
+springBoot {
+	buildInfo()
+}
+
+dependencies {
+	compile('com.google.apis:google-api-services-dialogflow:v2-rev70-1.25.0')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
+
+	compile('org.springframework.cloud:spring-cloud-starter')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-ribbon')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
