@@ -1,9 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.3.RELEASE'
-	id 'java'
+    id 'java'
+	id 'org.springframework.boot' version '2.2.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
-
-apply plugin: 'io.spring.dependency-management'
 
 group = 'com.shunya'
 version = '0.1'
@@ -28,7 +27,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Greenwich.SR1'
+	springCloudVersion = 'Hoxton.M3'
 }
 
 bootRun {
@@ -39,15 +38,23 @@ springBoot {
 	buildInfo()
 }
 
+test {
+	useJUnitPlatform()
+}
+
 dependencies {
-	compile('com.google.apis:google-api-services-dialogflow:v2-rev70-1.25.0')
+	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-dialogflow
+	compile group: 'com.google.apis', name: 'google-api-services-dialogflow', version: 'v2-rev81-1.25.0'
+//	compile('com.google.apis:google-api-services-dialogflow:v2-rev70-1.25.0')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 
 	compile('org.springframework.cloud:spring-cloud-starter')
-	compile('org.springframework.cloud:spring-cloud-starter-netflix-ribbon')
+	compile('org.springframework.cloud:spring-cloud-starter-loadbalancer')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
 dependencyManagement {

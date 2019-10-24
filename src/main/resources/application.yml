@@ -1,2 +1,11 @@
 
+spring:
+  application:
+    name: dialog
+
 spring.main.web-application-type: reactive
+
+logging:
+  level:
+    com.example: INFO
+    com.netflix.discovery: ERROR
