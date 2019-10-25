@@ -1,4 +1,7 @@
 # N.B. this is the default:
+spring:
+  application:
+    name: dialog
 #spring.cloud.config.uri: http://localhost:8888
 
 #server.port: 8082

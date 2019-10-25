@@ -1,5 +1,12 @@
 plugins {
     id 'java'
+	id "com.gorylenko.gradle-git-properties" version "2.2.0" apply true
+	id "org.jetbrains.kotlin.jvm" version "1.3.50" apply true
+	id "org.jetbrains.kotlin.plugin.spring" version "1.3.50" apply true
+	id "org.jetbrains.kotlin.plugin.allopen" version "1.3.50" apply true
+	id "org.jetbrains.kotlin.plugin.noarg" version "1.3.50" apply true
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.3.50" apply true
+	id "org.jetbrains.kotlin.kapt" version "1.3.50" apply true
 	id 'org.springframework.boot' version '2.2.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
@@ -8,13 +15,26 @@ group = 'com.shunya'
 version = '0.1'
 sourceCompatibility = '1.8'
 
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
+}
+compileTestKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
+}
+
 repositories {
 	mavenCentral()
 }
 
 bootJar {
 	archiveBaseName = "dialog"
-	version = version
+	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 	launchScript()
 	mainClassName = "com.example.dialogflow.DialogflowApp"
 }
@@ -43,6 +63,12 @@ test {
 }
 
 dependencies {
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50")
+	compile("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+	compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+	compile('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2')
+	compile('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.2')
+
 	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-dialogflow
 	compile group: 'com.google.apis', name: 'google-api-services-dialogflow', version: 'v2-rev81-1.25.0'
 //	compile('com.google.apis:google-api-services-dialogflow:v2-rev70-1.25.0')

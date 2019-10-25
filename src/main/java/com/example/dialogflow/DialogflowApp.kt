@@ -1,21 +1,25 @@
-package com.example.dialogflow;
+package com.example.dialogflow
 
-import com.google.api.client.json.jackson2.JacksonFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Bean;
+import com.google.api.client.json.jackson2.JacksonFactory
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
+import org.springframework.context.annotation.Bean
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class DialogflowApp {
+class DialogflowApp {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DialogflowApp.class, args);
-	}
+    @Bean
+    fun jacksonFactory(): JacksonFactory {
+        return JacksonFactory.getDefaultInstance()
+    }
 
-	@Bean
-	public JacksonFactory jacksonFactory() {
-		return JacksonFactory.getDefaultInstance();
-	}
+    companion object {
+
+        @JvmStatic
+        fun main(args: Array<String>) {
+            SpringApplication.run(DialogflowApp::class.java, *args)
+        }
+    }
 }
