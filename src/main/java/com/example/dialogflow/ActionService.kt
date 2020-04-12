@@ -22,10 +22,8 @@ class ActionService {
     fun process(rawRequest: String?): String {
         val request: GoogleCloudDialogflowV2WebhookRequest = jacksonFactory
                 .createJsonParser(rawRequest)
-                .parse<GoogleCloudDialogflowV2WebhookRequest>(GoogleCloudDialogflowV2WebhookRequest::class.java)
-
+                .parse(GoogleCloudDialogflowV2WebhookRequest::class.java)
 //        request.getOriginalDetectIntentRequest().getSource()
-//
 
         var responseText = ""
         when (request.queryResult.intent.displayName) {
