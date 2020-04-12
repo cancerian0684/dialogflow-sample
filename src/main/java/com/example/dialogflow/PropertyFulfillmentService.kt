@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 import java.io.StringWriter
 
 @Service
-class ActionService(private val jacksonFactory: JacksonFactory) {
-    private val logger: Logger = LoggerFactory.getLogger(ActionService::class.java)
+class PropertyFulfillmentService(private val jacksonFactory: JacksonFactory) {
+    private val logger: Logger = LoggerFactory.getLogger(PropertyFulfillmentService::class.java)
 
     fun process(rawRequest: String?): String {
         val request: GoogleCloudDialogflowV2WebhookRequest = jacksonFactory
@@ -19,9 +19,14 @@ class ActionService(private val jacksonFactory: JacksonFactory) {
                 .parse(GoogleCloudDialogflowV2WebhookRequest::class.java)
 //        request.getOriginalDetectIntentRequest().getSource()
 
-        var responseText = ""
-        when (request.queryResult.intent.displayName) {
-            "NeedQuote" -> responseText = getQuote(request.queryResult.parameters["TypeOfQuote"] as String?)
+        var responseText = "There are 10 properties"
+        request.queryResult.parameters.forEach { (t, u) ->
+            when(t) {
+                "modetype" -> {
+                    val modeTypeList = request.queryResult.parameters[t] as ArrayList<String>
+                    logger.info("Mode types = "+modeTypeList.joinToString(","))
+                }
+            }
         }
         logger.info("request = {}", request)
         val response = GoogleCloudDialogflowV2WebhookResponse()
@@ -31,10 +36,5 @@ class ActionService(private val jacksonFactory: JacksonFactory) {
         jsonGenerator.serialize(response)
         jsonGenerator.flush()
         return stringWriter.toString()
-    }
-
-    private fun getQuote(typeOfQuote: String?): String {
-        val responseText = "This is a great quote from category: $typeOfQuote"
-        return responseText
     }
 }

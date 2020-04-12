@@ -2,7 +2,6 @@ package com.example.dialogflow
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -11,16 +10,13 @@ import reactor.core.scheduler.Schedulers
 import java.util.concurrent.Callable
 
 @RestController
-class ActionController {
+class ActionController(val actionService: ActionService) {
     private val logger: Logger = LoggerFactory.getLogger(ActionController::class.java)
-
-    @Autowired
-    private lateinit var actionService: ActionService
 
     @PostMapping(value = ["/action"])
     fun process(@RequestBody rawRequest: Mono<String>): Mono<String> {
         return rawRequest
-                .doOnNext { s: String -> logger.info("Got the request from client") }
+                .doOnNext { s: String -> logger.info("Got the request from client $s") }
                 .flatMap { s: String -> blockingGet(Callable { actionService.process(s) }) }
     }
 

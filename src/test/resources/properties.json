@@ -1,0 +1,88 @@
+{
+  "responseId": "6cb7b300-3570-46ae-b5f7-ea70381f0ae0-266f04e0",
+  "queryResult": {
+    "queryText": "sale or lease",
+    "action": "CheckPropertyLocation.CheckPropertyLocation-custom",
+    "parameters": {
+      "modetype": [
+        "sale",
+        "lease"
+      ]
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "Let me check what we have for you",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "Let me check what we have for you"
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": "projects/agentk2-xxrtgn/agent/sessions/2d8b60de-9eab-24e4-a7bb-9829170c6108/contexts/modetype",
+        "lifespanCount": 5,
+        "parameters": {
+          "Property": [
+            "condo",
+            "Detached"
+          ],
+          "modetype": [
+            "sale",
+            "lease"
+          ],
+          "Place": [
+            "mexico"
+          ],
+          "Place.original": [
+            "mexico"
+          ],
+          "modetype.original": [
+            "sale",
+            "lease"
+          ],
+          "Property.original": [
+            "condo",
+            "detached"
+          ]
+        }
+      },
+      {
+        "name": "projects/agentk2-xxrtgn/agent/sessions/2d8b60de-9eab-24e4-a7bb-9829170c6108/contexts/checkpropertylocation-followup",
+        "lifespanCount": 1,
+        "parameters": {
+          "modetype.original": [
+            "sale",
+            "lease"
+          ],
+          "Property.original": [
+            "condo",
+            "detached"
+          ],
+          "Property": [
+            "condo",
+            "Detached"
+          ],
+          "Place": [
+            "mexico"
+          ],
+          "modetype": [
+            "sale",
+            "lease"
+          ],
+          "Place.original": [
+            "mexico"
+          ]
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/agentk2-xxrtgn/agent/intents/c3971445-4e45-46a2-967c-a31dc20289ff",
+      "displayName": "CheckPropertyLocationMode-followup"
+    },
+    "intentDetectionConfidence": 0.8000621,
+    "languageCode": "en"
+  }
+}
