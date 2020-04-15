@@ -2,6 +2,7 @@ package com.example.dialogflow
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -20,11 +21,9 @@ class ActionController(val actionService: ActionService) {
                 .flatMap { s: String -> blockingGet(Callable { actionService.process(s) }) }
     }
 
-    @PostMapping(value = ["/token"])
-    fun token(@RequestBody rawRequest: Mono<String>): Mono<String> {
-        return rawRequest
-                .doOnNext { s: String -> logger.info("Got the request from client $s") }
-                .flatMap { s: String -> blockingGet(Callable { actionService.processToken(s) }) }
+    @PostMapping(value = ["/token"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    suspend fun token(@RequestBody rawRequest: String): String {
+        return actionService.processToken(rawRequest)
     }
 
     // Run callable code on other thread pool than Netty event loop,

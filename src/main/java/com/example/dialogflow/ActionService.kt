@@ -39,7 +39,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         return responseText
     }
 
-    fun processToken(rawRequest: String?): String {
+    suspend fun processToken(rawRequest: String?): String {
         val request: GoogleCloudDialogflowV2WebhookRequest = jacksonFactory
                 .createJsonParser(rawRequest)
                 .parse(GoogleCloudDialogflowV2WebhookRequest::class.java)
@@ -49,7 +49,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         when (request.queryResult.intent.displayName) {
             "token-req" -> {
                val tokenType =  request.queryResult.parameters["token_type"] as String?
-                responseText = tokenService.createToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret").block()
+                responseText = tokenService.createToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
             }
         }
         logger.info("request = {}", request)
