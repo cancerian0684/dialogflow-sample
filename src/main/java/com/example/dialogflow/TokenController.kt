@@ -1,6 +1,8 @@
 package com.example.dialogflow
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 import org.apache.commons.codec.binary.Base64
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -46,7 +48,9 @@ class TokenService(private val objectMapper: ObjectMapper) {
                 .body(BodyInserters.fromFormData(formData))
                 .retrieve()
                 .awaitBody<String>()
-        val jsonNode = objectMapper.readTree(mono)
+        val jsonNode = withContext(IO) {
+             objectMapper.readTree(mono)
+        }
         return jsonNode.get("access_token").asText()
     }
 
