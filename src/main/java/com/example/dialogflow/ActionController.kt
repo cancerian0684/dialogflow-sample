@@ -20,6 +20,13 @@ class ActionController(val actionService: ActionService) {
                 .flatMap { s: String -> blockingGet(Callable { actionService.process(s) }) }
     }
 
+    @PostMapping(value = ["/token"])
+    fun token(@RequestBody rawRequest: Mono<String>): Mono<String> {
+        return rawRequest
+                .doOnNext { s: String -> logger.info("Got the request from client $s") }
+                .flatMap { s: String -> blockingGet(Callable { actionService.processToken(s) }) }
+    }
+
     // Run callable code on other thread pool than Netty event loop,
     // so blocking call will not block the event loop.
     private fun <T> blockingGet(callable: Callable<T>): Mono<T> {
