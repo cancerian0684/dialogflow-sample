@@ -13,13 +13,13 @@ import java.io.StringWriter
 class ActionService(private val jacksonFactory: JacksonFactory,
                     val tokenService: TokenService) {
     private val logger: Logger = LoggerFactory.getLogger(ActionService::class.java)
-
+    
     fun process(rawRequest: String?): String {
         val request: GoogleCloudDialogflowV2WebhookRequest = jacksonFactory
                 .createJsonParser(rawRequest)
                 .parse(GoogleCloudDialogflowV2WebhookRequest::class.java)
 //        request.getOriginalDetectIntentRequest().getSource()
-
+        
         var responseText = ""
         when (request.queryResult.intent.displayName) {
             "NeedQuote" -> responseText = getQuote(request.queryResult.parameters["TypeOfQuote"] as String?)
@@ -33,12 +33,12 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         jsonGenerator.flush()
         return stringWriter.toString()
     }
-
+    
     private fun getQuote(typeOfQuote: String?): String {
         val responseText = "This is a great quote from category: $typeOfQuote"
         return responseText
     }
-
+    
     suspend fun processToken(rawRequest: String?): String {
         logger.info("Incoming webhook request is")
         logger.info(rawRequest)
@@ -46,13 +46,27 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                 .createJsonParser(rawRequest)
                 .parse(GoogleCloudDialogflowV2WebhookRequest::class.java)
 //        request.getOriginalDetectIntentRequest().getSource()
-
+        
         var responseText: String? = ""
         when (request.queryResult.intent.displayName) {
             "token-req" -> {
-               val tokenType =  request.queryResult.parameters["token_type"] as String?
+                val tokenType = request.queryResult.parameters["token_type"] as String?
+                val project = request.queryResult.parameters["project"] as String?
                 logger.info("Toke type request is $tokenType")
-                responseText = tokenService.sunblindsToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                responseText = when (project) {
+                    "sunblinds" -> {
+                        tokenService.sunblindsToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                    }
+                    "cart67" -> {
+                        tokenService.cart67Token("8010106513", "test1234", "acme", "acmesecret")
+                    }
+                    "espion" -> {
+                        tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                    }
+                    else -> {
+                        tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                    }
+                }
             }
         }
         logger.info("request = $request")
