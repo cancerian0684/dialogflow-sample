@@ -1,4 +1,4 @@
-package com.example.dialogflow
+package com.shunya.dialogflow
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.Dispatchers.IO

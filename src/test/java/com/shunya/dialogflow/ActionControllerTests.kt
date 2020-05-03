@@ -1,4 +1,4 @@
-package com.example.dialogflow
+package com.shunya.dialogflow
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

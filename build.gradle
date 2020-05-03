@@ -36,7 +36,7 @@ bootJar {
 	archiveBaseName = "dialog"
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 	launchScript()
-	mainClassName = "com.example.dialogflow.DialogflowApp"
+	mainClassName = "com.shunya.dialogflow.DialogflowApp"
 }
 
 repositories {

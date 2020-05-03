@@ -1,4 +1,4 @@
-package com.example.dialogflow
+package com.shunya.dialogflow
 
 import com.google.api.client.json.jackson2.JacksonFactory
 import org.slf4j.Logger
