@@ -1,3 +1,4 @@
+shunya_home: /opt/shunya
 
 spring:
   application:
@@ -9,3 +10,10 @@ logging:
   level:
     com.example: INFO
     com.netflix.discovery: ERROR
+  file:
+    path: ${shunya_home}/logs
+    name: ${logging.file.path}/${spring.application.name}.log
+    max-history: 7
+    max-size: 20MB
+  pattern:
+      rolling-file-name: ${LOG_FILE}.%d{yyyy-MM}.%i.gz
