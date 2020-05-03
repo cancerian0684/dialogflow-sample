@@ -1,6 +1,8 @@
 package com.example.dialogflow
 
 import com.google.api.client.json.jackson2.JacksonFactory
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
@@ -23,3 +25,11 @@ class DialogflowApp {
         }
     }
 }
+
+inline fun measureTimeMillis(block: () -> Unit): Long {
+    val start = System.currentTimeMillis()
+    block()
+    return System.currentTimeMillis() - start
+}
+
+inline fun <reified T : Any> loggerFor(): Logger = LoggerFactory.getLogger(T::class.java)
