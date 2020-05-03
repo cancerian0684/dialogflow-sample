@@ -98,5 +98,28 @@ class TokenService(private val objectMapper: ObjectMapper) {
         }
         return jsonNode.get("access_token").asText()
     }
+    
+    suspend fun shunyaToken(username: String, password: String, clientId: String, clientSecret: String): String {
+        val credentials = "acme:acmesecret"
+        val encodedCredentials = String(Base64.encodeBase64(credentials.toByteArray()))
+        
+        val formData = LinkedMultiValueMap<String, String>()
+        formData.add("grant_type", "password")
+        formData.add("username", username)
+        formData.add("password", password)
+        formData.add("scope", "openid")
+        
+        val mono = webClient.post()
+                .uri("https://api.shunyafoundation.com/uaa/oauth/token")
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Basic $encodedCredentials")
+                .body(BodyInserters.fromFormData(formData))
+                .retrieve()
+                .awaitBody<String>()
+        val jsonNode = withContext(IO) {
+            objectMapper.readTree(mono)
+        }
+        return jsonNode.get("access_token").asText()
+    }
 
 }

@@ -63,6 +63,9 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                     "espion" -> {
                         tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
                     }
+                    "shunya" -> {
+                        tokenService.shunyaToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret")
+                    }
                     else -> {
                         tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
                     }
