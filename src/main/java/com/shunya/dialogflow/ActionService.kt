@@ -2,6 +2,7 @@ package com.shunya.dialogflow
 
 import com.google.api.client.json.JsonGenerator
 import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2IntentMessage
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookRequest
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookResponse
 import org.slf4j.Logger
@@ -75,7 +76,10 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         logger.info("request = $request")
         val response = GoogleCloudDialogflowV2WebhookResponse()
 //        response.fulfillmentText = responseText
-        response.payload = createCustomPayload("```$responseText```")
+        val msg = GoogleCloudDialogflowV2IntentMessage()
+        msg.platform = "SLACK"
+        msg.payload = createCustomPayload("```$responseText```")
+        response.fulfillmentMessages = listOf(msg)
         val stringWriter = StringWriter()
         val jsonGenerator: JsonGenerator = jacksonFactory.createJsonGenerator(stringWriter)
         jsonGenerator.serialize(response)
