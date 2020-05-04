@@ -74,11 +74,20 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         }
         logger.info("request = $request")
         val response = GoogleCloudDialogflowV2WebhookResponse()
-        response.fulfillmentText = responseText
+//        response.fulfillmentText = responseText
+        response.payload = createCustomPayload("```$responseText```")
         val stringWriter = StringWriter()
         val jsonGenerator: JsonGenerator = jacksonFactory.createJsonGenerator(stringWriter)
         jsonGenerator.serialize(response)
         jsonGenerator.flush()
         return stringWriter.toString()
+    }
+    
+    fun createCustomPayload(text: String): Map<String, Any> {
+        val payload: MutableMap<String, Any> = HashMap()
+        val map = HashMap<String, Any>()
+        map["text"] = text
+        payload["slack"] = map
+        return payload
     }
 }
