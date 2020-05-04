@@ -77,9 +77,11 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                 }
                 richResponses += slackPayload("Hi, AccessToken for project *$project* is:")
                 richResponses += slackPayload("```$responseText```")
+    
+                richResponses += webDemoPayload("Here is the $project AccessToken:")
+                richResponses += webDemoPayload(responseText)
             }
         }
-        richResponses += webDemoPayload(responseText)
         logger.info("request = $request")
         val response = GoogleCloudDialogflowV2WebhookResponse().apply {
             fulfillmentMessages = richResponses
