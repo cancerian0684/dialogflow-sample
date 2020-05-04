@@ -94,10 +94,12 @@ class ActionService(private val jacksonFactory: JacksonFactory,
     fun slackPayload(text: String): GoogleCloudDialogflowV2IntentMessage {
         val msg = GoogleCloudDialogflowV2IntentMessage()
         msg.platform = "SLACK"
-        val payload: MutableMap<String, Any> = HashMap()
-        val map = HashMap<String, Any>()
-        map["text"] = text
-        payload["slack"] = map
+        val map = HashMap<String, Any>().apply {
+            put("text", text)
+        }
+        val payload = HashMap<String, Any>().apply {
+            put("slack", map)
+        }
         msg.payload = payload
         return msg
     }
