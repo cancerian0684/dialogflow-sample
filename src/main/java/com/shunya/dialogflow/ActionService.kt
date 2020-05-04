@@ -5,6 +5,8 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2IntentMessage
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookRequest
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -49,6 +51,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
 //        request.getOriginalDetectIntentRequest().getSource()
         
         var responseText: String? = ""
+        val responses = ArrayList<GoogleCloudDialogflowV2IntentMessage>()
         when (request.queryResult.intent.displayName) {
             "token-req" -> {
                 val tokenType = request.queryResult.parameters["token_type"] as String?
@@ -71,27 +74,31 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                         tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
                     }
                 }
+                responses += slackPayload("Hi, AccessToken for project *$project* is:")
+                responses += slackPayload("```$responseText```")
             }
         }
         logger.info("request = $request")
         val response = GoogleCloudDialogflowV2WebhookResponse()
 //        response.fulfillmentText = responseText
-        val msg = GoogleCloudDialogflowV2IntentMessage()
-        msg.platform = "SLACK"
-        msg.payload = createCustomPayload("```$responseText```")
-        response.fulfillmentMessages = listOf(msg)
+        response.fulfillmentMessages = responses
         val stringWriter = StringWriter()
-        val jsonGenerator: JsonGenerator = jacksonFactory.createJsonGenerator(stringWriter)
-        jsonGenerator.serialize(response)
-        jsonGenerator.flush()
+        withContext(Dispatchers.IO) {
+            val jsonGenerator: JsonGenerator = jacksonFactory.createJsonGenerator(stringWriter)
+            jsonGenerator.serialize(response)
+            jsonGenerator.flush()
+        }
         return stringWriter.toString()
     }
     
-    fun createCustomPayload(text: String): Map<String, Any> {
+    fun slackPayload(text: String): GoogleCloudDialogflowV2IntentMessage {
+        val msg = GoogleCloudDialogflowV2IntentMessage()
+        msg.platform = "SLACK"
         val payload: MutableMap<String, Any> = HashMap()
         val map = HashMap<String, Any>()
         map["text"] = text
         payload["slack"] = map
-        return payload
+        msg.payload = map
+        return msg
     }
 }
