@@ -51,7 +51,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
 //        request.getOriginalDetectIntentRequest().getSource()
         
         var responseText: String? = ""
-        val responses = ArrayList<GoogleCloudDialogflowV2IntentMessage>()
+        val richResponses = ArrayList<GoogleCloudDialogflowV2IntentMessage>()
         when (request.queryResult.intent.displayName) {
             "token-req" -> {
                 val tokenType = request.queryResult.parameters["token_type"] as String?
@@ -74,14 +74,14 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                         tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
                     }
                 }
-                responses += slackPayload("Hi, AccessToken for project *$project* is:")
-                responses += slackPayload("```$responseText```")
+                richResponses += slackPayload("Hi, AccessToken for project *$project* is:")
+                richResponses += slackPayload("```$responseText```")
             }
         }
         logger.info("request = $request")
-        val response = GoogleCloudDialogflowV2WebhookResponse()
-//        response.fulfillmentText = responseText
-        response.fulfillmentMessages = responses
+        val response = GoogleCloudDialogflowV2WebhookResponse().apply {
+            fulfillmentMessages = richResponses
+        }
         val stringWriter = StringWriter()
         withContext(Dispatchers.IO) {
             val jsonGenerator: JsonGenerator = jacksonFactory.createJsonGenerator(stringWriter)
