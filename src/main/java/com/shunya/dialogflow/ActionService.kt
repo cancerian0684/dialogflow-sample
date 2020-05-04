@@ -98,7 +98,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
         val map = HashMap<String, Any>()
         map["text"] = text
         payload["slack"] = map
-        msg.payload = map
+        msg.payload = payload
         return msg
     }
 }
