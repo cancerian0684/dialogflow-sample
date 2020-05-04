@@ -3,6 +3,7 @@ package com.shunya.dialogflow
 import com.google.api.client.json.JsonGenerator
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2IntentMessage
+import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2IntentMessageText
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookRequest
 import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookResponse
 import kotlinx.coroutines.Dispatchers
@@ -78,6 +79,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                 richResponses += slackPayload("```$responseText```")
             }
         }
+        richResponses += webDemoPayload(responseText)
         logger.info("request = $request")
         val response = GoogleCloudDialogflowV2WebhookResponse().apply {
             fulfillmentMessages = richResponses
@@ -89,6 +91,12 @@ class ActionService(private val jacksonFactory: JacksonFactory,
             jsonGenerator.flush()
         }
         return stringWriter.toString()
+    }
+    
+    fun webDemoPayload(text: String?): GoogleCloudDialogflowV2IntentMessage {
+        val msg = GoogleCloudDialogflowV2IntentMessage()
+        msg.text = GoogleCloudDialogflowV2IntentMessageText().setText(listOf(text))
+        return msg
     }
     
     fun slackPayload(text: String): GoogleCloudDialogflowV2IntentMessage {
