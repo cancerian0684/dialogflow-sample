@@ -1,7 +1,6 @@
 package com.shunya.dialogflow
 
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,7 +11,7 @@ import java.util.concurrent.Callable
 
 @RestController
 class ActionController(val actionService: ActionService) {
-    private val logger: Logger = LoggerFactory.getLogger(ActionController::class.java)
+    private val logger: Logger = loggerFor<ActionController>()
 
     @PostMapping(value = ["/action"])
     fun process(@RequestBody rawRequest: Mono<String>): Mono<String> {
