@@ -47,12 +47,12 @@ class TokenService(private val objectMapper: ObjectMapper) {
         
         val formData = LinkedMultiValueMap<String, String>()
         formData.add("grant_type", "password")
-        formData.add("username", "cancerian0684@gmail.com")
-        formData.add("password", "1234")
+        formData.add("username", username)
+        formData.add("password", password)
         formData.add("scope", "openid")
         
         val mono = webClient.post()
-                .uri("/uptime-sso/oauth/token")
+                .uri("/espion-auth/oauth/token")
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic $encodedCredentials")
                 .body(BodyInserters.fromFormData(formData))
