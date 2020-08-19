@@ -1,13 +1,13 @@
 plugins {
     id 'java'
-	id "com.gorylenko.gradle-git-properties" version "2.2.2" apply true
-	id "org.jetbrains.kotlin.jvm" version "1.3.72" apply true
-	id "org.jetbrains.kotlin.plugin.spring" version "1.3.72" apply true
-	id "org.jetbrains.kotlin.plugin.allopen" version "1.3.72" apply true
-	id "org.jetbrains.kotlin.plugin.noarg" version "1.3.72" apply true
-	id "org.jetbrains.kotlin.plugin.jpa" version "1.3.72" apply true
-	id "org.jetbrains.kotlin.kapt" version "1.3.72" apply true
-	id 'org.springframework.boot' version '2.3.2.RELEASE'
+	id "com.gorylenko.gradle-git-properties" version "2.2.3" apply true
+	id "org.jetbrains.kotlin.jvm" version "1.4.0" apply true
+	id "org.jetbrains.kotlin.plugin.spring" version "1.4.0" apply true
+	id "org.jetbrains.kotlin.plugin.allopen" version "1.4.0" apply true
+	id "org.jetbrains.kotlin.plugin.noarg" version "1.4.0" apply true
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.4.0" apply true
+	id "org.jetbrains.kotlin.kapt" version "1.4.0" apply true
+	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
@@ -47,7 +47,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Hoxton.SR6'
+	springCloudVersion = 'Hoxton.SR7'
 }
 
 bootRun {
@@ -65,12 +65,12 @@ test {
 dependencies {
 	//TODO: Remove once migration is complete for 2.3.x
 	runtime("org.springframework.boot:spring-boot-properties-migrator")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72")
-	implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.72")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.0")
 	implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.7')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.7')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.9')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9')
 
 	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-dialogflow
 	implementation group: 'com.google.apis', name: 'google-api-services-dialogflow', version: 'v2-rev124-1.25.0'
