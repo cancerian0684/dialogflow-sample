@@ -60,7 +60,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                 logger.info("Toke type request is $tokenType")
                 responseText = when (project) {
                     "sunblinds" -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                        tokenService.sunblindsToken("cancerian0684@gmail.com", "password", "acme", "acmesecret")
                     }
                     "cart67" -> {
                         tokenService.cart67Token("8010106513", "test1234", "acme", "acmesecret")
