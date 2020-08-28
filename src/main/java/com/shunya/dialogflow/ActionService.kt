@@ -57,22 +57,22 @@ class ActionService(private val jacksonFactory: JacksonFactory,
             "token-req" -> {
                 val tokenType = request.queryResult.parameters["token_type"] as String?
                 val project = request.queryResult.parameters["project"] as String?
-                logger.info("Toke type request is $tokenType")
+                logger.info("Token type request is $tokenType")
                 responseText = when (project) {
                     "sunblinds" -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "password", "acme", "acmesecret")
+                        tokenService.token("cancerian0684@gmail.com", "password", "acme", "acmesecret", "https://dapi.shunyafoundation.com/sunblinds-auth/oauth/token")
                     }
                     "cart67" -> {
-                        tokenService.cart67Token("8010106513", "test1234", "acme", "acmesecret")
+                        tokenService.token("8010106513", "test1234", "acme", "acmesecret", "https://dapi.shunyafoundation.com/cart67-auth/oauth/token")
                     }
                     "espion" -> {
-                        tokenService.mTestToken("cancerian0684@gmail.com", "12345", "acme", "acmesecret")
+                        tokenService.token("cancerian0684@gmail.com", "12345", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
                     }
                     "shunya" -> {
-                        tokenService.shunyaToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret")
+                        tokenService.token("cancerian0684@gmail.com", "1234", "acme", "acmesecret", "https://api.shunyafoundation.com/uaa/oauth/token")
                     }
                     else -> {
-                        tokenService.mTestToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret")
+                        tokenService.token("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
                     }
                 }
                 richResponses += slackPayload("Hi, AccessToken for project *$project* is:")

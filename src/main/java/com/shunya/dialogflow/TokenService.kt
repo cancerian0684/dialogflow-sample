@@ -10,37 +10,42 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
+import org.springframework.web.reactive.function.client.awaitEntity
+import org.springframework.web.reactive.function.client.awaitExchange
 
 @Service
 class TokenService(private val objectMapper: ObjectMapper) {
     private val webClient: WebClient = WebClient
             .builder()
-            .baseUrl("https://dapi.shunyafoundation.com")
             .build()
 
-    suspend fun sunblindsToken(username: String, password: String, clientId: String, clientSecret: String): String {
-        val credentials = "acme:acmesecret"
-        val encodedCredentials = String(Base64.encodeBase64(credentials.toByteArray()))
+    suspend fun token(username: String, password: String, clientId: String, clientSecret: String, url: String): String {
+        val encodedCredentials = String(Base64.encodeBase64("$clientId:$clientSecret".toByteArray()))
 
         val formData = LinkedMultiValueMap<String, String>()
         formData.add("grant_type", "password")
-        formData.add("username", "cancerian0684@gmail.com")
-        formData.add("password", "123@cba")
+        formData.add("username", username)
+        formData.add("password", password)
         formData.add("scope", "openid")
 
         val mono = webClient.post()
-                .uri("/sunblinds-auth/oauth/token")
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic $encodedCredentials")
                 .body(BodyInserters.fromFormData(formData))
-                .retrieve()
-                .awaitBody<String>()
-        val jsonNode = withContext(IO) {
-             objectMapper.readTree(mono)
+                .awaitExchange()
+                .awaitEntity<String>()
+        return if(mono.statusCode.is2xxSuccessful) {
+            val jsonNode = withContext(IO) {
+                objectMapper.readTree(mono.body)
+            }
+            jsonNode.get("access_token").asText()
+        } else {
+            mono.statusCode.reasonPhrase
         }
-        return jsonNode.get("access_token").asText()
     }
     
+    @Deprecated("duplicate")
     suspend fun mTestToken(username: String, password: String, clientId: String, clientSecret: String): String {
         val credentials = "acme:acmesecret"
         val encodedCredentials = String(Base64.encodeBase64(credentials.toByteArray()))
@@ -52,7 +57,7 @@ class TokenService(private val objectMapper: ObjectMapper) {
         formData.add("scope", "openid")
         
         val mono = webClient.post()
-                .uri("/espion-auth/oauth/token")
+                .uri("https://dapi.shunyafoundation.com/espion-auth/oauth/token")
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic $encodedCredentials")
                 .body(BodyInserters.fromFormData(formData))
@@ -64,18 +69,19 @@ class TokenService(private val objectMapper: ObjectMapper) {
         return jsonNode.get("access_token").asText()
     }
     
+    @Deprecated("duplicate")
     suspend fun cart67Token(username: String, password: String, clientId: String, clientSecret: String): String {
         val credentials = "acme:acmesecret"
         val encodedCredentials = String(Base64.encodeBase64(credentials.toByteArray()))
         
         val formData = LinkedMultiValueMap<String, String>()
         formData.add("grant_type", "password")
-        formData.add("username", "8010106513")
-        formData.add("password", "test1234")
+        formData.add("username", username)
+        formData.add("password", password)
         formData.add("scope", "openid")
         
         val mono = webClient.post()
-                .uri("/cart67-auth/oauth/token")
+                .uri("https://dapi.shunyafoundation.com/cart67-auth/oauth/token")
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic $encodedCredentials")
                 .body(BodyInserters.fromFormData(formData))
@@ -87,6 +93,7 @@ class TokenService(private val objectMapper: ObjectMapper) {
         return jsonNode.get("access_token").asText()
     }
     
+    @Deprecated("duplicate")
     suspend fun shunyaToken(username: String, password: String, clientId: String, clientSecret: String): String {
         val credentials = "acme:acmesecret"
         val encodedCredentials = String(Base64.encodeBase64(credentials.toByteArray()))
