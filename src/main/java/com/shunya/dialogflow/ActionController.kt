@@ -19,7 +19,7 @@ class ActionController(val actionService: ActionService) {
     fun process(@RequestBody rawRequest: Mono<String>): Mono<String> {
         return rawRequest
                 .doOnNext { s: String -> logger.info("Got the request from client $s") }
-                .flatMap { s: String -> blockingGet(Callable { actionService.process(s) }) }
+                .flatMap { s: String -> blockingGet { actionService.process(s) } }
     }
     
     @PostMapping(value = ["/token"], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -29,7 +29,7 @@ class ActionController(val actionService: ActionService) {
     
     @PostMapping("/raw-json")
     fun acceptRaw(@RequestBody rawJson: String) {
-        logger.info("Raw Json: " + rawJson)
+        logger.info("Raw Json: $rawJson")
     }
     
     @PostMapping(value = ["/raw-json-2"], consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
