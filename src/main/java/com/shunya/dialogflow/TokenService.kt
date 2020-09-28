@@ -19,7 +19,7 @@ class TokenService(private val objectMapper: ObjectMapper) {
             .builder()
             .build()
 
-    suspend fun token(username: String, password: String, clientId: String, clientSecret: String, url: String): String {
+    suspend fun sunblindsToken(username: String, password: String, clientId: String, clientSecret: String, url: String): String {
         val encodedCredentials = String(Base64.encodeBase64("$clientId:$clientSecret".toByteArray()))
 
         val formData = LinkedMultiValueMap<String, String>()
