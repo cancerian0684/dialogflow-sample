@@ -9,7 +9,7 @@ spring.main.web-application-type: reactive
 logging:
   level:
     com.shunya: INFO
-    org.springframework: DEBUG
+    org.springframework: INFO
     com.netflix.discovery: ERROR
   file:
     path: ${shunya_home}/logs

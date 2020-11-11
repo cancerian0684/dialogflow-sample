@@ -60,19 +60,19 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                 logger.info("Token type request is $tokenType")
                 responseText = when (project) {
                     "sunblinds" -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "password", "acme", "acmesecret", "https://dapi.shunyafoundation.com/sunblinds-auth/oauth/token")
+                        tokenService.accessToken("cancerian0684@gmail.com", "password", "acme", "acmesecret", "https://dapi.shunyafoundation.com/sunblinds-auth/oauth/token")
                     }
                     "cart67" -> {
-                        tokenService.sunblindsToken("8010106513", "test1234", "acme", "acmesecret", "https://dapi.shunyafoundation.com/cart67-auth/oauth/token")
+                        tokenService.accessToken("8010106513", "test1234", "acme", "acmesecret", "https://dapi.shunyafoundation.com/cart67-auth/oauth/token")
                     }
                     "espion" -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "12345", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
+                        tokenService.accessToken("cancerian0684@gmail.com", "12345", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
                     }
                     "shunya" -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret", "https://api.shunyafoundation.com/uaa/oauth/token")
+                        tokenService.accessToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret", "https://api.shunyafoundation.com/uaa/oauth/token")
                     }
                     else -> {
-                        tokenService.sunblindsToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
+                        tokenService.accessToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
                     }
                 }
                 richResponses += slackPayload("Hi, AccessToken for project *$project* is:")
