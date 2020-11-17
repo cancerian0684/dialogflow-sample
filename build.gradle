@@ -7,7 +7,7 @@ plugins {
 	id "org.jetbrains.kotlin.plugin.noarg" version "1.4.10" apply true
 	id "org.jetbrains.kotlin.plugin.jpa" version "1.4.10" apply true
 	id "org.jetbrains.kotlin.kapt" version "1.4.10" apply true
-	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'org.springframework.boot' version '2.4.0'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
@@ -36,7 +36,7 @@ bootJar {
 	archiveBaseName = "dialog"
 	archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
 	launchScript()
-	mainClassName = "com.shunya.dialogflow.DialogflowApp"
+	mainClass = "com.shunya.dialogflow.DialogflowApp"
 }
 
 repositories {
@@ -47,7 +47,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Hoxton.SR9'
+	set('springCloudVersion', "2020.0.0-SNAPSHOT")
 }
 
 bootRun {
@@ -81,9 +81,7 @@ dependencies {
 	implementation('org.springframework.cloud:spring-cloud-starter-loadbalancer')
 	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {

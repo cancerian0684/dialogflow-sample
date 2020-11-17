@@ -14,7 +14,20 @@ logging:
   file:
     path: ${shunya_home}/logs
     name: ${logging.file.path}/${spring.application.name}.log
-    max-history: 7
-    max-size: 20MB
-  pattern:
-      rolling-file-name: ${LOG_FILE}.%d{yyyy-MM}.%i.gz
+  logback:
+    rollingpolicy:
+      max-history: 7
+      max-file-size: 20MB
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM}.%i.gz
+
+eureka:
+  client:
+    serviceUrl:
+      #      defaultZone: ${SERVICE_REGISTRY}
+      #      defaultZone: ${EUREKA_URL:http://user:password@localhost:5000}/eureka/
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    preferIpAddress: false
+    ip-address: 192.168.1.10
+    secure-port-enabled: false
