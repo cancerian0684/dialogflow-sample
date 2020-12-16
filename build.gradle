@@ -1,13 +1,13 @@
 plugins {
     id 'java'
-	id "com.gorylenko.gradle-git-properties" version "2.2.3" apply true
-	id "org.jetbrains.kotlin.jvm" version "1.4.10" apply true
-	id "org.jetbrains.kotlin.plugin.spring" version "1.4.10" apply true
-	id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10" apply true
-	id "org.jetbrains.kotlin.plugin.noarg" version "1.4.10" apply true
-	id "org.jetbrains.kotlin.plugin.jpa" version "1.4.10" apply true
-	id "org.jetbrains.kotlin.kapt" version "1.4.10" apply true
-	id 'org.springframework.boot' version '2.4.0'
+	id "com.gorylenko.gradle-git-properties" version "2.2.4" apply true
+	id "org.jetbrains.kotlin.jvm" version "1.4.21" apply true
+	id "org.jetbrains.kotlin.plugin.spring" version "1.4.21" apply true
+	id "org.jetbrains.kotlin.plugin.allopen" version "1.4.21" apply true
+	id "org.jetbrains.kotlin.plugin.noarg" version "1.4.21" apply true
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.4.21" apply true
+	id "org.jetbrains.kotlin.kapt" version "1.4.21" apply true
+	id 'org.springframework.boot' version '2.4.1'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
@@ -47,7 +47,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2020.0.0-SNAPSHOT")
+	set('springCloudVersion', "2020.0.0-RC1")
 }
 
 bootRun {
@@ -65,8 +65,8 @@ test {
 dependencies {
 	//TODO: Remove once migration is complete for 2.3.x
 	runtime("org.springframework.boot:spring-boot-properties-migrator")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10")
-	implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
 	implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
 	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1')
 	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.1')
