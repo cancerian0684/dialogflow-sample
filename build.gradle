@@ -63,14 +63,13 @@ test {
 }
 
 dependencies {
-	//TODO: Remove once migration is complete for 2.3.x
 	runtime("org.springframework.boot:spring-boot-properties-migrator")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
 	implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.1')
-	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.1')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.2')
+	implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.2')
 
 	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-dialogflow
 	implementation group: 'com.google.apis', name: 'google-api-services-dialogflow', version: 'v2-rev124-1.25.0'
