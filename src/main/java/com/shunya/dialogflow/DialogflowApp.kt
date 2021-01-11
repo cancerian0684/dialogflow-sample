@@ -15,6 +15,11 @@ class DialogflowApp {
         return JacksonFactory.getDefaultInstance()
     }
 
+//    @Bean
+//    fun gsonFactory(): GsonFactory? {
+//        return GsonFactory.getDefaultInstance()
+//    }
+
     companion object {
 
         @JvmStatic
