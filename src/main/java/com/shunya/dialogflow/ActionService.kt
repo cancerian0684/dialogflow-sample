@@ -72,7 +72,7 @@ class ActionService(private val jacksonFactory: JacksonFactory,
                         tokenService.accessToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret", "https://api.shunyafoundation.com/uaa/oauth/token")
                     }
                     "priksha" -> {
-                        tokenService.accessToken("cancerian0684@gmail.com", "1234", "acme", "acmesecret", "https://dapi.shunyafoundation.com/priksha-auth/oauth/token")
+                        tokenService.accessToken("cancerian0684@gmail.com", "password", "acme", "acmesecret", "https://dapi.shunyafoundation.com/priksha-auth/oauth/token")
                     }
                     else -> {
                         tokenService.accessToken("cancerian0684@gmail.com", "123@cba", "acme", "acmesecret", "https://dapi.shunyafoundation.com/espion-auth/oauth/token")
